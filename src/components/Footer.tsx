@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import { MdOutlineEmail } from "react-icons/md";
+import { FaLinkedin } from "react-icons/fa";
+import { BsInstagram } from "react-icons/bs";
 
 export function Footer() {
   return (
@@ -16,78 +19,78 @@ export function Footer() {
               Transform your networking skills with AI-powered practice and conversation tools.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-[color:var(--text-muted)] hover:text-[color:var(--brand-primary)]">
+              <Link href="mailto:leo.wj.li@gmail.com" className="text-[color:var(--text-muted)] hover:text-[color:var(--brand-primary)] transition-colors">
                 <span className="sr-only">Email</span>
-                📘
+                <MdOutlineEmail size={20} />
               </Link>
-              <Link href="#" className="text-[color:var(--text-muted)] hover:text-[color:var(--brand-primary)]">
+              <Link href="https://www.linkedin.com/in/leowjli/" className="text-[color:var(--text-muted)] hover:text-[color:var(--brand-primary)] transition-colors">
                 <span className="sr-only">LinkedIn</span>
-                💼
+                <FaLinkedin size={20} />
               </Link>
-              <Link href="#" className="text-[color:var(--text-muted)] hover:text-[color:var(--brand-primary)]">
+              <Link href="https://www.instagram.com/leo.268/" className="text-[color:var(--text-muted)] hover:text-[color:var(--brand-primary)] transition-colors">
                 <span className="sr-only">Instagram</span>
-                📷
+                <BsInstagram size={20} />
               </Link>
             </div>
           </div>
 
-          {/* About Us */}
+          {/* Features */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-[color:var(--text-base)] tracking-wider uppercase">
-              About Us
+              Features
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-                  Contact Us
+                <Link href="/scenarios" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors">
+                  Practice Sessions
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-                  Our Story
+                <Link href="/generate" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors">
+                  Generate Kits
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-                  Blog Posts
+                <Link href="/cold-email" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors">
+                  Email Coach
                 </Link>
               </li>
               <li>
-                <Link href="/scenarios" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-                  Get Started
+                <Link href="/history" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors">
+                  View History
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Link Site
+          {/* Quick Start */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-[color:var(--text-base)] tracking-wider uppercase">
-              Link Site
+              Quick Start
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-                  Link Seven
+                <Link href="/scenarios" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors">
+                  Choose Scenario
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-                  Link Eight
+                <Link href="/generate" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors">
+                  Create Kit
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-                  Link Nine
+                <Link href="/cold-email" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors">
+                  Improve Emails
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-                  Link Ten
+                <Link href="/history" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors">
+                  Track Progress
                 </Link>
               </li>
             </ul>
-          </div> */}
+          </div>
 
           {/* Contact */}
           <div className="space-y-4">
@@ -108,17 +111,6 @@ export function Footer() {
           <p className="text-sm text-[color:var(--text-muted)]">
             © 2025 CoffeeChat Coach. All rights reserved.
           </p>
-          {/* <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-              Terms of Use
-            </Link>
-            <Link href="#" className="text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]">
-              Cookie Policy
-            </Link>
-          </div> */}
         </div>
       </div>
     </footer>

@@ -17,6 +17,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "CoffeeChat Coach",
   description: "Practice networking and craft impactful cold outreach messages with AI",
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
@@ -27,6 +30,9 @@ export default function RootLayout({
   return (
     <ClerkProvider dynamic>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        </head>
         <body className={`${urbanist.variable} ${poppins.variable} antialiased`}>
           {children}
         </body>
