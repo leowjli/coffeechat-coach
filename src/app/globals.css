@@ -1,26 +1,102 @@
+@import "../../build/css/tokens.css";
+@import "../../build/css/tokens-utilities.css";
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Semantic aliases mapping to design tokens */
+  
+  /* Backgrounds */
+  --bg-base: var(--primitives-color-white);
+  --bg-surface: var(--primitives-color-chambray-lightest);
+  --bg-surface-elevated: var(--primitives-color-white);
+  --bg-primary: var(--primitives-color-chambray);
+  --bg-secondary: var(--primitives-color-snuff-lighter);
+  
+  /* Text */
+  --text-base: var(--primitives-color-neutral-darkest);
+  --text-muted: var(--primitives-color-neutral);
+  --text-subtle: var(--primitives-color-neutral-light);
+  --text-on-primary: var(--primitives-color-white);
+  
+  /* Borders */
+  --border-default: var(--primitives-color-neutral-lighter);
+  --border-subtle: var(--primitives-color-neutral-lightest);
+  --border-primary: var(--primitives-color-chambray);
+  
+  /* Brand colors */
+  --brand-primary: var(--primitives-color-chambray);
+  --brand-primary-light: var(--primitives-color-cornflower-blue);
+  --brand-primary-lighter: var(--primitives-color-polo-blue);
+  --brand-primary-lightest: var(--primitives-color-pigeon-post-lightest);
+  --brand-accent: var(--primitives-color-snuff);
+  
+  /* Shadows - mapping to shadow tokens */
+  --shadow-sm: 0px var(--xsmall-0-y) var(--xsmall-0-blur) var(--xsmall-0-spread) var(--xsmall-0-color), 0px var(--xsmall-1-y) var(--xsmall-1-blur) var(--xsmall-1-spread) var(--xsmall-1-color);
+  --shadow-md: 0px var(--small-0-y) var(--small-0-blur) var(--small-0-spread) var(--small-0-color), 0px var(--small-1-y) var(--small-1-blur) var(--small-1-spread) var(--small-1-color);
+  --shadow-lg: 0px var(--medium-0-y) var(--medium-0-blur) var(--medium-0-spread) var(--medium-0-color), 0px var(--medium-1-y) var(--medium-1-blur) var(--medium-1-spread) var(--medium-1-color);
+  --shadow-xl: 0px var(--large-0-y) var(--large-0-blur) var(--large-0-spread) var(--large-0-color), 0px var(--large-1-y) var(--large-1-blur) var(--large-1-spread) var(--large-1-color);
+  
+  /* Radius */
+  --radius-sm: var(--ui-styles-radius-small);
+  --radius-md: var(--ui-styles-radius-medium);
+  --radius-lg: var(--ui-styles-radius-large);
+  
+  /* Spacing */
+  --spacing-section-sm: var(--spacing--sizingdesktop-section-padding-padding-section-small);
+  --spacing-section-md: var(--spacing--sizingdesktop-section-padding-padding-section-medium);
+  --spacing-section-lg: var(--spacing--sizingdesktop-section-padding-padding-section-large);
+  --spacing-global: var(--spacing--sizingdesktop-page-padding-padding-global);
+  
+  /* Container sizes */
+  --container-sm: var(--spacing--sizingdesktop-container-container-small);
+  --container-md: var(--spacing--sizingdesktop-container-container-medium);
+  --container-lg: var(--spacing--sizingdesktop-container-container-large);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark theme class */
+[data-theme="dark"] {
+  /* Dark theme semantic aliases */
+  --bg-base: var(--primitives-color-neutral-darkest);
+  --bg-surface: var(--primitives-color-neutral-darker);
+  --bg-surface-elevated: var(--primitives-color-neutral-dark);
+  --bg-primary: var(--primitives-color-chambray-light);
+  --bg-secondary: var(--primitives-color-chambray-darker);
+  
+  --text-base: var(--primitives-color-white);
+  --text-muted: var(--primitives-color-neutral-lighter);
+  --text-subtle: var(--primitives-color-neutral-light);
+  --text-on-primary: var(--primitives-color-neutral-darkest);
+  
+  --border-default: var(--primitives-color-neutral-dark);
+  --border-subtle: var(--primitives-color-neutral-darker);
+  --border-primary: var(--primitives-color-chambray-light);
+  
+  --brand-primary: var(--primitives-color-chambray-light);
+  --brand-primary-light: var(--primitives-color-cornflower-blue-light);
+  --brand-primary-lighter: var(--primitives-color-polo-blue-light);
+  --brand-primary-lightest: var(--primitives-color-pigeon-post-light);
+  --brand-accent: var(--primitives-color-snuff-darkest);
 }
 
-@media (prefers-color-scheme: dark) {
+/* Mobile responsive spacing overrides */
+@media (max-width: 768px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --spacing-section-sm: var(--spacing--sizingmobile-section-padding-padding-section-small);
+    --spacing-section-md: var(--spacing--sizingmobile-section-padding-padding-section-medium);
+    --spacing-section-lg: var(--spacing--sizingmobile-section-padding-padding-section-large);
+    --spacing-global: var(--spacing--sizingmobile-page-padding-padding-global);
   }
 }
 
+@theme inline {
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-base);
+  --font-sans: var(--text-style-variables-fontfamily-poppins);
+  --font-heading: var(--text-style-variables-fontfamily-urbanist);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-base);
+  font-family: var(--font-sans);
 }

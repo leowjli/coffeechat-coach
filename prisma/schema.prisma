@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Contact {
+  id               String   @id @default(cuid())
+  ownerClerkUserId String
+  name             String?
+  profileUrl       String?
+  rawProfileText   String
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  kits             CoffeechatKit[]
+
+  @@index([ownerClerkUserId])
+}
+
+model CoffeechatKit {
+  id               String   @id @default(cuid())
+  ownerClerkUserId String
+  contactId        String
+  contact          Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  sharedInterests  Json
+  starters         Json
+  followUps        Json
+  oneLinePitch     String
+  modelVersion     String?
+  tokensUsed       Int?
+  createdAt        DateTime @default(now())
+
+  @@index([ownerClerkUserId])
+}
+
+model ChatSession {
+  id               String   @id @default(cuid())
+  ownerClerkUserId String
+  scenario         String
+  transcript       Json
+  feedback         Json
+  createdAt        DateTime @default(now())
+
+  @@index([ownerClerkUserId])
+}
+
+model ColdEmailDraft {
+  id                   String   @id @default(cuid())
+  ownerClerkUserId     String
+  draftText            String
+  aiFeedback           Json
+  aiRewrite            String
+  aiSubjectSuggestions Json
+  createdAt            DateTime @default(now())
+
+  @@index([ownerClerkUserId])
+}
