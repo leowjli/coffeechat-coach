@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "prisma generate",
@@ -15,7 +15,7 @@
     "tokens:utils": "node scripts/generate-utilities-from-tokens.mjs",
     "tokens": "npm run tokens:build && npm run tokens:utils",
     "prebuild": "npm run tokens",
-    "postinstall": "npm run tokens"
+    "postinstall": "prisma generate && npm run tokens"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.31.6",
