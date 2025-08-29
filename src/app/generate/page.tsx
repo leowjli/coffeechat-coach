@@ -104,19 +104,40 @@ export default function GeneratePage() {
       {/* Header Section */}
       <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28 bg-[color:var(--bg-surface)]">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col lg:flex-row items-start lg:items-end gap-16 md:mb-18 lg:mb-20">
-            <h1 className="flex flex-col text-5xl font-semibold md:text-8xl lg:text-9xl text-[color:var(--text-base)] font-urbanist">
-              <span>Create</span>
-              <span className="text-[color:var(--brand-primary)]">Conversation</span>
-              <span>Starters</span>
-            </h1>
-            <div className="flex flex-col mt-5 lg:mt-0 backdrop-blur-md bg-[color:var(--bg-surface-elevated)]/80 rounded-2xl p-6 border border-[color:var(--border-default)]/50 shadow-lg">
-              <p className="md:text-md font-medium text-[color:var(--brand-primary-light)]">
-                Unlock the power of meaningful conversations with our Generate Kit feature.
-              </p>
-              <p className="md:text-md font-medium text-[color:var(--brand-primary-light)]">
-                Drop your prospective LinkedIn profile for tailored conversation starters that will help you connect authentically and confidently.
-              </p>
+          <div className="flex flex-col items-start gap-8">
+            <div className="grid md:grid-cols-2 gap-12 items-center min-w-0">
+              <div className="space-y-6 max-w-[85%] min-w-0">
+                <h1 className="flex flex-col text-5xl font-semibold md:text-6xl lg:text-7xl text-[color:var(--text-base)] font-urbanist">
+                  <span>Create</span>
+                  <span className="text-[color:var(--brand-primary)]">Conversation</span>
+                  <span>Starters</span>
+                </h1>
+                                  <div className="flex flex-col mt-5 lg:mt-0">
+                    <p className="md:text-md font-medium">
+                      Create personalized conversation starters with AI.
+                    </p>
+                    <p className="md:text-md font-medium">
+                      Paste the content of a LinkedIn profile and get tailored networking prompts.
+                    </p>
+                  </div>
+              </div>
+
+              <div className="relative w-full min-w-0">
+                <div className="w-full aspect-[4/3] bg-[color:var(--bg-base)] rounded-[var(--radius-lg)] overflow-hidden shadow-[var(--shadow-lg)]">
+                  <div className="w-full h-full flex items-center justify-center p-4">
+                    <div className="text-center space-y-4">
+                      <img
+                        src="/imgs/typing-rafiki.png"
+                        alt="AI-Powered Conversation Generation"
+                        className="w-full h-auto max-h-full object-contain"
+                      />
+                      <p className="text-[color:var(--text-muted)] text-sm">
+                        <a href="https://storyset.com/online" className="hover:underline">Online illustrations by Storyset</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -148,7 +169,7 @@ export default function GeneratePage() {
                         placeholder=""
                         required
                         value={userInfo.name}
-                        onChange={(e) => setUserInfo({...userInfo, name: e.target.value})}
+                        onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
                         className="w-full p-3 rounded-sm text-base border-[color:var(--border-default)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--text-base)]"
                       />
                     </div>
@@ -161,7 +182,7 @@ export default function GeneratePage() {
                         placeholder="CS Student, SWE, PM"
                         required
                         value={userInfo.role}
-                        onChange={(e) => setUserInfo({...userInfo, role: e.target.value})}
+                        onChange={(e) => setUserInfo({ ...userInfo, role: e.target.value })}
                         className="w-full p-3 rounded-sm text-base border-[color:var(--border-default)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--text-base)]"
                       />
                     </div>
@@ -173,7 +194,7 @@ export default function GeneratePage() {
                       <Input
                         placeholder=""
                         value={userInfo.company}
-                        onChange={(e) => setUserInfo({...userInfo, company: e.target.value})}
+                        onChange={(e) => setUserInfo({ ...userInfo, company: e.target.value })}
                         className="w-full p-3 rounded-sm text-base border-[color:var(--border-default)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--text-base)]"
                       />
                     </div>
@@ -186,7 +207,7 @@ export default function GeneratePage() {
                         placeholder="breaking into PM, finding a mentor"
                         required
                         value={userInfo.goals}
-                        onChange={(e) => setUserInfo({...userInfo, goals: e.target.value})}
+                        onChange={(e) => setUserInfo({ ...userInfo, goals: e.target.value })}
                         className="w-full p-3 rounded-sm text-base border-[color:var(--border-default)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--text-base)]"
                       />
                     </div>
@@ -199,7 +220,7 @@ export default function GeneratePage() {
                     <Textarea
                       placeholder="This helps create a more authentic one-line pitch."
                       value={userInfo.background}
-                      onChange={(e) => setUserInfo({...userInfo, background: e.target.value})}
+                      onChange={(e) => setUserInfo({ ...userInfo, background: e.target.value })}
                       rows={3}
                       className="resize-y w-full p-3 rounded-sm text-base border-[color:var(--border-default)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--text-base)]"
                     />
@@ -238,7 +259,7 @@ export default function GeneratePage() {
                         placeholder="Paste their profile info - About, work experience, education, projects, etc."
                         required
                         value={targetInfo.profileText}
-                        onChange={(e) => setTargetInfo({...targetInfo, profileText: e.target.value})}
+                        onChange={(e) => setTargetInfo({ ...targetInfo, profileText: e.target.value })}
                         rows={8}
                         className="resize-y w-full p-3 rounded-sm text-base border-[color:var(--border-default)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--text-base)]"
                       />
@@ -262,7 +283,7 @@ export default function GeneratePage() {
                 >
                   {isLoading ? 'Generating Personalized Kit...' : 'Generate CoffeeChat Kit'}
                 </Button>
-                
+
                 <p className="mt-3 text-sm text-[color:var(--text-muted)] text-center">
                   This will create conversation starters based on shared interests between you and your networking target
                 </p>
