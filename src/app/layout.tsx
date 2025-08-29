@@ -20,6 +20,27 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  openGraph: {
+    title: "CoffeeChat Coach",
+    description: "Practice networking and craft impactful cold outreach messages with AI",
+    type: "website",
+    url: "https://coffeechat-coach.vercel.app",
+    siteName: "CoffeeChat Coach",
+    images: [
+      {
+        url: "/imgs/coffeechat-coach-preview.png",
+        width: 1200,
+        height: 630,
+        alt: "CoffeeChat Coach - AI-powered networking practice platform",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CoffeeChat Coach",
+    description: "Practice networking and craft impactful cold outreach messages with AI",
+    images: ["/imgs/conversation-cuate.png"],
+  },
 };
 
 export default function RootLayout({
