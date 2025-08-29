@@ -103,7 +103,7 @@ export default function HistoryPage() {
     <div className="min-h-screen bg-[color:var(--bg-base)]">
       <Navbar />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-h1 text-[color:var(--text-primary)] mb-8">Your History</h1>
+        <h1 className="text-h2 text-center text-[color:var(--text-primary)] mb-8">Your History</h1>
         
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -118,9 +118,6 @@ export default function HistoryPage() {
         ) : (
           <main>
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-[color:var(--text-base)] mb-4 font-urbanist">
-                Your Practice History
-              </h1>
               <p className="text-lg text-[color:var(--text-muted)]">
                 Review your past sessions, kits, and email drafts
               </p>

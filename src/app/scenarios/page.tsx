@@ -1,9 +1,14 @@
+'use client';
+
 import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { scenarios } from '@/lib/scenarios';
+import { useUser, SignInButton } from '@clerk/nextjs';
 
 export default function ScenariosPage() {
+  const { isSignedIn } = useUser();
+
   return (
     <div className="min-h-screen bg-[color:var(--bg-base)]">
       <Navbar />
@@ -11,16 +16,13 @@ export default function ScenariosPage() {
       {/* Header Section */}
       <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28 flex items-center">
         <div className="mx-auto max-w-7xl w-full">
-          <div className="mb-12 flex flex-col gap-3 md:mb-18 lg:mb-20 max-w-2xl">
+          <div className="flex flex-col gap-3 max-w-3xl">
             <h1 className="text-5xl font-bold md:text-6xl lg:text-7xl text-[color:var(--text-base)] leading-[1.2] font-urbanist">
               Master <span className="text-[color:var(--brand-primary)]">Networking</span> with AI
             </h1>
             <p className="md:text-md text-[color:var(--text-muted)]">
               Our AI-powered chat simulation helps you practice real-life networking scenarios, building your confidence and communication skills. Start connecting authentically and prepare for successful coffee chats today!
             </p>
-            <Link href="#scenarios">
-              <Button>Practice</Button>
-            </Link>
           </div>
         </div>
       </section>
@@ -51,11 +53,19 @@ export default function ScenariosPage() {
                     {scenario.description}
                   </p>
                 </div>
-                <Link href={`/chat/${scenario.id}`}>
-                  <Button className="w-full">
-                    Start Practice
-                  </Button>
-                </Link>
+                {isSignedIn ? (
+                  <Link href={`/chat/${scenario.id}`}>
+                    <Button className="w-full">
+                      Start Practice
+                    </Button>
+                  </Link>
+                ) : (
+                  <SignInButton mode="modal">
+                    <Button className="w-full">
+                      Start Practice
+                    </Button>
+                  </SignInButton>
+                )}
               </div>
             ))}
           </div>
@@ -64,11 +74,19 @@ export default function ScenariosPage() {
             <p className="mb-6 md:text-md text-[color:var(--text-muted)]">
               Not ready to practice? Generate a conversation kit first.
             </p>
-            <Link href="/generate">
-              <Button variant="secondary">
-                Generate CoffeeChat Kit
-              </Button>
-            </Link>
+            {isSignedIn ? (
+              <Link href="/generate">
+                <Button variant="secondary">
+                  Generate CoffeeChat Kit
+                </Button>
+              </Link>
+            ) : (
+              <SignInButton mode="modal">
+                <Button variant="secondary">
+                  Generate CoffeeChat Kit
+                </Button>
+              </SignInButton>
+            )}
           </div>
         </div>
       </section>

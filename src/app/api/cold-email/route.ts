@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
     const savedDraft = await db.coldEmailDraft.create({
       data: {
         ownerClerkUserId: userId,
+        user_id: userId, // For RLS
         draftText,
         aiFeedback: {
           strengths: analysis.aiFeedback.strengths,

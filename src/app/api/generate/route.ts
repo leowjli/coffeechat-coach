@@ -45,23 +45,33 @@ export async function POST(request: NextRequest) {
     const contact = await db.contact.create({
       data: {
         ownerClerkUserId: userId,
+        user_id: userId, // For RLS
         name: null, // Could be extracted from profile text in the future
-        profileUrl: targetInfo.profileUrl || null,
+        profileUrl: null,
         rawProfileText: targetInfo.profileText,
       },
     });
 
-    // Then create the kit
+    // Then create the coffee chat kit
     const savedKit = await db.coffeechatKit.create({
       data: {
         ownerClerkUserId: userId,
+        user_id: userId, // For RLS
         contactId: contact.id,
         sharedInterests: kit.sharedInterests,
         starters: kit.starters,
         followUps: kit.followUps,
         oneLinePitch: kit.oneLinePitch,
-        modelVersion: 'gpt-4o-mini',
-        tokensUsed: null, // Could track this in the future
+        modelVersion: 'v1',
+        tokensUsed: 0, // Could be calculated from AI response
+      },
+      include: {
+        contact: {
+          select: {
+            name: true,
+            profileUrl: true,
+          },
+        },
       },
     });
 

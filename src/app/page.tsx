@@ -1,9 +1,14 @@
+'use client';
+
 import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
+import { useUser, SignInButton } from '@clerk/nextjs';
 
 export default function Home() {
+  const { isSignedIn } = useUser();
+
   return (
     <div className="min-h-screen bg-[color:var(--bg-base)]">
       <Navbar />
@@ -23,10 +28,16 @@ export default function Home() {
                 Transform your networking skills with our AI-powered tools designed for students and new grads.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link href="/scenarios">
-                  <Button size="lg">Start</Button>
-                </Link>
-                <Link href="/generate">
+                {isSignedIn ? (
+                  <Link href="/scenarios">
+                    <Button size="lg">Start</Button>
+                  </Link>
+                ) : (
+                  <SignInButton mode="modal">
+                    <Button size="lg">Start</Button>
+                  </SignInButton>
+                )}
+                <Link href="#value-proposition">
                   <Button variant="secondary" size="lg">Learn More</Button>
                 </Link>
               </div>
@@ -34,10 +45,16 @@ export default function Home() {
 
             <div className="relative w-full min-w-0">
               <div className="w-full aspect-[4/3] bg-[color:var(--bg-surface)] rounded-[var(--radius-lg)] overflow-hidden shadow-[var(--shadow-lg)]">
-                <div className="w-full h-full flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center p-4">
                   <div className="text-center space-y-4">
-                    <div className="text-6xl">☕</div>
-                    <p className="text-[color:var(--text-muted)]">AI-Powered Practice Platform</p>
+                    <img 
+                      src="/imgs/conversation-cuate.png" 
+                      alt="AI-Powered Practice Platform" 
+                      className="w-full h-auto max-h-full object-contain"
+                    />
+                    <p className="text-[color:var(--text-muted)] text-sm">
+                      <a href="https://storyset.com/friends" className="hover:underline">Friends illustrations by Storyset</a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -47,9 +64,9 @@ export default function Home() {
       </section>
 
       {/* Value Proposition Section */}
-      <section className="px-[var(--spacing-global)] py-[var(--spacing-section-lg)] bg-[color:var(--bg-surface)]">
+      <section id="value-proposition" className="px-[var(--spacing-global)] py-[var(--spacing-section-lg)] bg-[color:var(--bg-surface)]">
         <div className="w-full max-w-full lg:container lg:max-w-[var(--container-lg)] mx-auto text-center">
-          <h2 className="text-h2 font-bold text-[color:var(--text-base)] mb-6 max-w-full break-words">
+          <h2 className="text-h3 sm:text-h2 font-bold text-[color:var(--text-base)] mb-6 max-w-full break-words">
             UNLOCK YOUR NETWORKING POTENTIAL WITH AI TOOLS
           </h2>
           <p className="text-lg text-[color:var(--text-muted)] max-w-3xl mx-auto mb-12 break-words">
@@ -108,19 +125,33 @@ export default function Home() {
                 <span className="font-extrabold text-[color:var(--brand-primary)]">Transform</span> your networking skills with AI-powered conversations and feedback tools. <br />
                 <span className="font-extrabold text-[color:var(--brand-primary)]">Practice</span> networking scenarios designed and gain conversation starters to connect authentically.
               </h2>
-              <Link href="/scenarios">
-                <Button size="lg" className="w-fit">
-                  Start practicing
-                </Button>
-              </Link>
+              {isSignedIn ? (
+                <Link href="/scenarios">
+                  <Button size="lg" className="w-fit">
+                    Start Practicing
+                  </Button>
+                </Link>
+              ) : (
+                <SignInButton mode="modal">
+                  <Button size="lg" className="w-fit">
+                    Start Practicing
+                  </Button>
+                </SignInButton>
+              )}
             </div>
 
             <div className="relative w-full min-w-0">
               <div className="w-full aspect-[4/3] bg-[color:var(--bg-surface)] rounded-[var(--radius-lg)] overflow-hidden shadow-[var(--shadow-lg)]">
-                <div className="w-full h-full flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center p-4">
                   <div className="text-center space-y-4">
-                    <div className="text-6xl">🎯</div>
-                    <p className="text-[color:var(--text-muted)]">Personalized Practice</p>
+                    <img 
+                      src="/imgs/personalization-rafiki.png" 
+                      alt="Personalized Practice" 
+                      className="w-full h-auto max-h-full object-contain"
+                    />
+                    <p className="text-[color:var(--text-muted)] text-sm">
+                      <a href="https://storyset.com/online" className="hover:underline">Online illustrations by Storyset</a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -130,7 +161,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="px-[var(--spacing-global)] py-[var(--spacing-section-lg)] bg-[color:var(--bg-surface)]">
+      {/* <section className="px-[var(--spacing-global)] py-[var(--spacing-section-lg)] bg-[color:var(--bg-surface)]">
         <div className="w-full max-w-full lg:container lg:max-w-[var(--container-lg)] mx-auto text-center">
           <h2 className="text-h3 font-bold text-[color:var(--text-base)] mb-12 max-w-full break-words">
             USER SUCCESS
@@ -177,28 +208,39 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Final CTA Section */}
       <section className="px-[var(--spacing-global)] py-[var(--spacing-section-lg)]">
         <div className="w-full max-w-full lg:container lg:max-w-[var(--container-md)] mx-auto text-center space-y-8">
-          <h2 className="text-h2 font-bold text-[color:var(--text-base)] max-w-full break-words">
+          <h2 className="text-h3 sm:text-h2 font-bold text-[color:var(--text-base)] max-w-full break-words">
             START YOUR NETWORKING JOURNEY TODAY
           </h2>
           <p className="text-lg text-[color:var(--text-muted)] break-words">
             Join thousands of students and professionals who have transformed their networking skills
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/scenarios">
-              <Button size="lg">Practice</Button>
-            </Link>
-            <Link href="/generate">
-              <Button variant="secondary" size="lg">Learn More</Button>
-            </Link>
+            {isSignedIn ? (
+              <Link href="/scenarios">
+                <Button size="lg">Start Practicing</Button>
+              </Link>
+            ) : (
+              <SignInButton mode="modal">
+                <Button size="lg">Start Practicing</Button>
+              </SignInButton>
+            )}
+            {isSignedIn ? (
+              <Link href="/generate">
+                <Button variant="secondary" size="lg">Generate a Kit!</Button>
+              </Link>
+            ) : (
+              <SignInButton mode="modal">
+                <Button variant="secondary" size="lg">Generate a Kit!</Button>
+              </SignInButton>
+            )}
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );

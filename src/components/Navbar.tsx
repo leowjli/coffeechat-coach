@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { UserButton, useUser, SignInButton, SignUpButton } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -9,6 +10,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 export function Navbar() {
   const { isSignedIn } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -38,7 +40,11 @@ export function Navbar() {
           <nav className="flex items-center gap-6">
             <Link
               href="/scenarios"
-              className="text-sm font-medium text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors"
+              className={`text-sm font-medium transition-colors ${
+                pathname === '/scenarios' 
+                  ? 'text-[color:var(--text-base)] font-semibold' 
+                  : 'text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]'
+              }`}
             >
               Practice Now
             </Link>
@@ -47,19 +53,31 @@ export function Navbar() {
               <>
                 <Link
                   href="/generate"
-                  className="text-sm font-medium text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors"
+                  className={`text-sm font-medium transition-colors ${
+                    pathname === '/generate' 
+                      ? 'text-[color:var(--text-base)] font-semibold' 
+                      : 'text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]'
+                  }`}
                 >
                   Generate Kit
                 </Link>
                 <Link
                   href="/cold-email"
-                  className="text-sm font-medium text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors"
+                  className={`text-sm font-medium transition-colors ${
+                    pathname === '/cold-email' 
+                      ? 'text-[color:var(--text-base)] font-semibold' 
+                      : 'text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]'
+                  }`}
                 >
                   Email Coach
                 </Link>
                 <Link
                   href="/history"
-                  className="text-sm font-medium text-[color:var(--text-muted)] hover:text-[color:var(--text-base)] transition-colors"
+                  className={`text-sm font-medium transition-colors ${
+                    pathname === '/history' 
+                      ? 'text-[color:var(--text-base)] font-semibold' 
+                      : 'text-[color:var(--text-muted)] hover:text-[color:var(--text-base)]'
+                  }`}
                 >
                   History
                 </Link>
@@ -136,7 +154,11 @@ export function Navbar() {
               <div className="flex flex-col space-y-4">
                 <Link
                   href="/scenarios"
-                  className="text-base font-medium text-[color:var(--text-base)] hover:text-[color:var(--brand-primary)] transition-colors py-2"
+                  className={`text-base font-medium transition-colors py-2 ${
+                    pathname === '/scenarios' 
+                      ? 'text-[color:var(--brand-primary)] font-semibold' 
+                      : 'text-[color:var(--text-base)] hover:text-[color:var(--brand-primary)]'
+                  }`}
                   onClick={closeMenu}
                 >
                   Practice Now
@@ -146,21 +168,33 @@ export function Navbar() {
                   <>
                     <Link
                       href="/generate"
-                      className="text-base font-medium text-[color:var(--text-base)] hover:text-[color:var(--brand-primary)] transition-colors py-2"
+                      className={`text-base font-medium transition-colors py-2 ${
+                        pathname === '/generate' 
+                          ? 'text-[color:var(--brand-primary)] font-semibold' 
+                          : 'text-[color:var(--text-base)] hover:text-[color:var(--brand-primary)]'
+                      }`}
                       onClick={closeMenu}
                     >
                       Generate Kit
                     </Link>
                     <Link
                       href="/cold-email"
-                      className="text-base font-medium text-[color:var(--text-base)] hover:text-[color:var(--brand-primary)] transition-colors py-2"
+                      className={`text-base font-medium transition-colors py-2 ${
+                        pathname === '/cold-email' 
+                          ? 'text-[color:var(--brand-primary)] font-semibold' 
+                          : 'text-[color:var(--text-base)] hover:text-[color:var(--brand-primary)]'
+                      }`}
                       onClick={closeMenu}
                     >
                       Email Coach
                     </Link>
                     <Link
                       href="/history"
-                      className="text-base font-medium text-[color:var(--text-base)] hover:text-[color:var(--brand-primary)] transition-colors py-2"
+                      className={`text-base font-medium transition-colors py-2 ${
+                        pathname === '/history' 
+                          ? 'text-[color:var(--brand-primary)] font-semibold' 
+                          : 'text-[color:var(--text-base)] hover:text-[color:var(--brand-primary)]'
+                      }`}
                       onClick={closeMenu}
                     >
                       History

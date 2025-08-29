@@ -23,7 +23,7 @@ export function Footer() {
                 <span className="sr-only">Email</span>
                 <MdOutlineEmail size={20} />
               </Link>
-              <Link href="https://www.linkedin.com/in/leowjli/" className="text-[color:var(--text-muted)] hover:text-[color:var(--brand-primary)] transition-colors">
+              <Link href="https://www.linkedin.com/in/leoli07/" className="text-[color:var(--text-muted)] hover:text-[color:var(--brand-primary)] transition-colors">
                 <span className="sr-only">LinkedIn</span>
                 <FaLinkedin size={20} />
               </Link>

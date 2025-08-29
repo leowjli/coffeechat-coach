@@ -107,7 +107,7 @@ export default function GeneratePage() {
           <div className="flex flex-col lg:flex-row items-start lg:items-end gap-16 md:mb-18 lg:mb-20">
             <h1 className="flex flex-col text-5xl font-semibold md:text-8xl lg:text-9xl text-[color:var(--text-base)] font-urbanist">
               <span>Create</span>
-              <span>Conversation</span>
+              <span className="text-[color:var(--brand-primary)]">Conversation</span>
               <span>Starters</span>
             </h1>
             <div className="flex flex-col mt-5 lg:mt-0 backdrop-blur-md bg-[color:var(--bg-surface-elevated)]/80 rounded-2xl p-6 border border-[color:var(--border-default)]/50 shadow-lg">
@@ -141,7 +141,7 @@ export default function GeneratePage() {
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-semibold text-[color:var(--text-base)] mb-2">
+                      <label className="text-sm font-semibold text-[color:var(--text-base)] mb-2 h-6 flex items-center">
                         Your Name *
                       </label>
                       <Input
@@ -154,7 +154,7 @@ export default function GeneratePage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-[color:var(--text-base)] mb-2">
+                      <label className="text-sm font-semibold text-[color:var(--text-base)] mb-2 h-6 flex items-center">
                         Your Current Role *
                       </label>
                       <Input
@@ -167,7 +167,7 @@ export default function GeneratePage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-[color:var(--text-base)] mb-2">
+                      <label className="text-sm font-semibold text-[color:var(--text-base)] mb-2 h-6 flex items-center">
                         Your Company/School
                       </label>
                       <Input
@@ -179,7 +179,7 @@ export default function GeneratePage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-[color:var(--text-base)] mb-2">
+                      <label className="text-sm font-semibold text-[color:var(--text-base)] mb-2 h-6 flex items-center">
                         Your Goals *
                       </label>
                       <Input
@@ -197,7 +197,7 @@ export default function GeneratePage() {
                       Your Background/Interests
                     </label>
                     <Textarea
-                      placeholder="Brief description of your background, interests, or what you're passionate about. This helps create a more authentic one-line pitch."
+                      placeholder="This helps create a more authentic one-line pitch."
                       value={userInfo.background}
                       onChange={(e) => setUserInfo({...userInfo, background: e.target.value})}
                       rows={3}
@@ -210,7 +210,7 @@ export default function GeneratePage() {
                 <div className="bg-[color:var(--bg-surface)] border border-[color:var(--border-default)] rounded-lg p-8">
                   <div className="mb-6 text-center">
                     <h2 className="mb-3 text-2xl font-bold md:text-3xl text-[color:var(--text-base)] font-urbanist">
-                      🎯 Person You Want to Network With
+                      Person You Want to Network With
                     </h2>
                     <p className="text-[color:var(--text-muted)]">
                       Paste their LinkedIn profile information to find shared interests and create conversation starters
@@ -218,7 +218,7 @@ export default function GeneratePage() {
                   </div>
 
                   <div className="space-y-6">
-                    <div>
+                    {/* <div>
                       <label className="block text-sm font-semibold text-[color:var(--text-base)] mb-2">
                         LinkedIn Profile URL (Optional)
                       </label>
@@ -228,14 +228,14 @@ export default function GeneratePage() {
                         onChange={(e) => setTargetInfo({...targetInfo, profileUrl: e.target.value})}
                         className="w-full p-3 rounded-sm text-base border-[color:var(--border-default)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--text-base)]"
                       />
-                    </div>
+                    </div> */}
 
                     <div>
                       <label className="block text-sm font-semibold text-[color:var(--text-base)] mb-2">
                         Their Profile Content *
                       </label>
                       <Textarea
-                        placeholder="Copy and paste their About section, work experience, education, projects, etc. The more information you provide, the better we can identify shared interests and create personalized conversation starters."
+                        placeholder="Paste their profile info - About, work experience, education, projects, etc."
                         required
                         value={targetInfo.profileText}
                         onChange={(e) => setTargetInfo({...targetInfo, profileText: e.target.value})}
@@ -283,7 +283,7 @@ export default function GeneratePage() {
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="bg-[color:var(--bg-surface)] border border-[color:var(--border-default)] rounded-lg p-6">
                     <h3 className="mb-4 text-xl font-bold md:text-2xl text-[color:var(--text-base)] font-urbanist">
-                      🎯 Shared Interests
+                      Shared Interests
                     </h3>
                     <ul className="space-y-3">
                       {kit.sharedInterests.map((interest, index) => (
@@ -311,7 +311,7 @@ export default function GeneratePage() {
 
                   <div className="bg-[color:var(--bg-surface)] border border-[color:var(--border-default)] rounded-lg p-6">
                     <h3 className="mb-4 text-xl font-bold md:text-2xl text-[color:var(--text-base)] font-urbanist">
-                      🔄 Follow-up Questions
+                      Follow-up Questions
                     </h3>
                     <ul className="space-y-3">
                       {kit.followUps.map((followUp, index) => (

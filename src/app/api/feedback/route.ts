@@ -17,15 +17,13 @@ export async function POST(request: NextRequest) {
     // Generate feedback from AI
     const feedback = await generateChatFeedback(transcript);
 
-    // Save the chat session to database
-    // Determine scenario from transcript context (simplified approach)
-    const scenario = 'general';
-
+    // Save to database
     await db.chatSession.create({
       data: {
         ownerClerkUserId: userId,
-        scenario,
-        transcript: transcript,
+        user_id: userId, // For RLS
+        scenario: body.scenario,
+        transcript: body.transcript,
         feedback: {
           strengths: feedback.strengths,
           improvements: feedback.improvements

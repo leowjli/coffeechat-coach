@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,16 +8,18 @@ datasource db {
 }
 
 model Contact {
-  id               String   @id @default(cuid())
+  id               String          @id @default(cuid())
   ownerClerkUserId String
   name             String?
   profileUrl       String?
   rawProfileText   String
   notes            String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  user_id          String
   kits             CoffeechatKit[]
 
+  @@index([user_id])
   @@index([ownerClerkUserId])
 }
 
@@ -28,7 +27,6 @@ model CoffeechatKit {
   id               String   @id @default(cuid())
   ownerClerkUserId String
   contactId        String
-  contact          Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
   sharedInterests  Json
   starters         Json
   followUps        Json
@@ -36,7 +34,10 @@ model CoffeechatKit {
   modelVersion     String?
   tokensUsed       Int?
   createdAt        DateTime @default(now())
+  user_id          String
+  contact          Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
 
+  @@index([user_id])
   @@index([ownerClerkUserId])
 }
 
@@ -47,7 +48,9 @@ model ChatSession {
   transcript       Json
   feedback         Json
   createdAt        DateTime @default(now())
+  user_id          String
 
+  @@index([user_id])
   @@index([ownerClerkUserId])
 }
 
@@ -59,6 +62,8 @@ model ColdEmailDraft {
   aiRewrite            String
   aiSubjectSuggestions Json
   createdAt            DateTime @default(now())
+  user_id              String
 
+  @@index([user_id])
   @@index([ownerClerkUserId])
 }
