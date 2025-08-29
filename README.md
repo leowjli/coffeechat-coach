@@ -1,6 +1,11 @@
 # ☕ CoffeeChat Coach
 
-A modern, responsive web application that helps international students and new graduates practice networking and interview skills through AI-powered roleplay scenarios and cold outreach coaching.
+A modern, responsive web application that helps students and new graduates practice networking and interview skills through AI-powered roleplay scenarios and cold outreach coaching.
+
+## 🔗 Project Links
+
+- **📋 PRD**: https://drive.google.com/file/d/1jqi8nIR-3WaIib7Uzs2Uy_P8U1kCQQ-c/view?usp=sharing
+- **🌐 Live Demo**: https://www.coffeechatcoach.com/
 
 ## 🚀 Features
 
