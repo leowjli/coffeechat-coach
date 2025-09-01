@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import { Navbar } from '@/components/Navbar';
 import { ChatMessage } from '@/components/ChatMessage';
@@ -13,17 +13,89 @@ import type { ChatMessage as ChatMessageType, ChatFeedback } from '@/lib/ai';
 export default function ChatPage() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { isSignedIn } = useUser();
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedback, setFeedback] = useState<ChatFeedback | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
   const scenario = getScenario(params.scenario as string);
 
+  // Load existing session
+  const loadSession = useCallback(async (sessionIdToLoad: string) => {
+    try {
+      const response = await fetch(`/api/chat-session?sessionId=${sessionIdToLoad}`);
+      if (response.ok) {
+        const data = await response.json();
+        setMessages(data.transcript);
+        setSessionId(data.sessionId);
+        if (data.feedback && Object.keys(data.feedback).length > 0) {
+          setFeedback(data.feedback);
+          setShowFeedback(true);
+        }
+      } else {
+        // Session not found or error - start new session
+        console.warn('Could not load session, starting fresh');
+        const initialMessage: ChatMessageType = {
+          role: 'assistant',
+          content: `Hi, I'm a ${scenario?.persona}. Thanks for reaching out - I'd love to learn more about your background and see how I can help. How are you doing?`
+        };
+        setMessages([initialMessage]);
+      }
+    } catch (error) {
+      console.error('Error loading session:', error);
+      // Start fresh on error
+      const initialMessage: ChatMessageType = {
+        role: 'assistant',
+        content: `Hi, I'm a ${scenario?.persona}. Thanks for reaching out - I'd love to learn more about your background and see how I can help. How are you doing?`
+      };
+      setMessages([initialMessage]);
+    }
+  }, [scenario]);
+
+  // Save session to database
+  const saveSession = useCallback(async (messagesToSave: ChatMessageType[]) => {
+    if (messagesToSave.length < 4) return;
+    
+    setIsSaving(true);
+    try {
+      const response = await fetch('/api/chat-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionId,
+          scenario: params.scenario,
+          transcript: messagesToSave,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (!sessionId && data.sessionId) {
+          setSessionId(data.sessionId);
+          // Update URL to include session ID for future reference
+          const newUrl = `${window.location.pathname}?sessionId=${data.sessionId}`;
+          window.history.replaceState({}, '', newUrl);
+        }
+      } else {
+        console.error('Failed to save session');
+      }
+    } catch (error) {
+      console.error('Error saving session:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  }, [sessionId, params.scenario]);
+
+  // Load existing session or create new one
   useEffect(() => {
     if (!isSignedIn) {
       router.push('/');
@@ -35,18 +107,25 @@ export default function ChatPage() {
       return;
     }
 
-    // Initial AI greeting
-    const initialMessage: ChatMessageType = {
-      role: 'assistant',
-      content: `Hi! I'm excited to chat with you today. I'm ${scenario.persona}. Thanks for reaching out - I'd love to learn more about your background and see how I can help. How are you doing?`
-    };
-    setMessages([initialMessage]);
+    const existingSessionId = searchParams.get('sessionId');
+    
+    if (existingSessionId) {
+      // Load existing session
+      loadSession(existingSessionId);
+    } else {
+      // Start new session with initial greeting
+      const initialMessage: ChatMessageType = {
+        role: 'assistant',
+        content: `Hi, I'm a ${scenario.persona}. Thanks for reaching out - I'd love to learn more about your background and see how I can help. How are you doing?`
+      };
+      setMessages([initialMessage]);
+    }
 
     // Focus the input field when component loads
     setTimeout(() => {
       inputRef.current?.focus();
     }, 100);
-  }, [scenario, isSignedIn, router]);
+  }, [scenario, isSignedIn, router, searchParams, loadSession]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -100,7 +179,8 @@ export default function ChatPage() {
         content: ''
       };
 
-      setMessages(prev => [...prev, aiMessage]);
+      const messagesWithAI = [...newMessages, aiMessage];
+      setMessages(messagesWithAI);
 
       while (true) {
         const { done, value } = await reader.read();
@@ -116,14 +196,17 @@ export default function ChatPage() {
         });
       }
 
+      // Save session after AI response is complete
+      const finalMessages = [...newMessages, aiMessage];
+      await saveSession(finalMessages);
+
     } catch (error) {
       console.error('Error sending message:', error);
-      // Add user message back if AI response failed
-      setMessages(prev => prev.slice(0, -1));
+      setMessages(prev => prev.slice(0, -1)); // Remove failed message
     } finally {
       setIsLoading(false);
     }
-  }, [input, isLoading, messages, params.scenario]);
+  }, [input, isLoading, messages, params.scenario, sessionId, saveSession]);
 
   const endSession = async () => {
     if (messages.length < 4) {
@@ -133,15 +216,25 @@ export default function ChatPage() {
 
     setIsLoading(true);
     try {
+      // Ensure session is saved before getting feedback
+      await saveSession(messages);
+
       const response = await fetch('/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ transcript: messages }),
+        body: JSON.stringify({ 
+          sessionId,
+          scenario: params.scenario,
+          transcript: messages 
+        }),
       });
 
-      if (!response.ok) throw new Error('Failed to get feedback');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(`Failed to get feedback: ${errorData.error || response.statusText}`);
+      }
 
       const feedbackData = await response.json();
       setFeedback(feedbackData);
@@ -149,6 +242,7 @@ export default function ChatPage() {
 
     } catch (error) {
       console.error('Error getting feedback:', error);
+      alert('Sorry, there was an issue generating your feedback. Please try again or check your connection.');
     } finally {
       setIsLoading(false);
     }
@@ -259,9 +353,17 @@ export default function ChatPage() {
           </div>
           
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
-            <p className="text-xs text-[color:var(--text-muted)] order-2 sm:order-1">
-              Have at least 4 messages before ending
-            </p>
+            <div className="flex items-center gap-2 order-2 sm:order-1">
+              <p className="text-xs text-[color:var(--text-muted)]">
+                Have at least 4 messages before ending
+              </p>
+              {isSaving && (
+                <span className="text-xs text-[color:var(--text-muted)] flex items-center gap-1">
+                  <span className="inline-block w-2 h-2 bg-[color:var(--brand-primary)] rounded-full animate-pulse"></span>
+                  Saving...
+                </span>
+              )}
+            </div>
             <Button 
               variant="outline" 
               onClick={endSession}
@@ -269,7 +371,7 @@ export default function ChatPage() {
               size="sm"
               className="w-full sm:w-auto order-1 sm:order-2"
             >
-              End Session & Get Feedback
+              {isLoading ? 'Generating Feedback...' : 'End Session & Get Feedback'}
             </Button>
           </div>
         </div>

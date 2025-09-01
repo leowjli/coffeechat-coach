@@ -23,6 +23,12 @@ export const scenarios: Scenario[] = [
     title: 'Product Manager Info Interview',
     description: 'Learn about product management from a Senior PM. Understand the role, career path, and how to break into PM.',
     persona: 'Senior Product Manager'
+  },
+  {
+    id: 'designer',
+    title: 'UX Designer Portfolio Review',
+    description: 'Get feedback on your design work from a Senior UX Designer. Learn about design processes, career growth, and industry trends.',
+    persona: 'Senior UX Designer'
   }
 ];
 

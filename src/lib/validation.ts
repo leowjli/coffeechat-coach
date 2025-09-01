@@ -6,15 +6,8 @@ export const generateKitSchema = z.object({
 });
 
 export const chatMessageSchema = z.object({
-  scenario: z.enum(['recruiter', 'alumni', 'pm']),
+  scenario: z.enum(['recruiter', 'alumni', 'pm', 'designer']),
   message: z.string().min(1, 'Message cannot be empty').max(1000, 'Message too long'),
-});
-
-export const feedbackSchema = z.object({
-  transcript: z.array(z.object({
-    role: z.enum(['system', 'user', 'assistant']),
-    content: z.string(),
-  })).min(2, 'Transcript must have at least 2 messages'),
 });
 
 export const coldEmailSchema = z.object({
@@ -43,16 +36,6 @@ export function validateChatMessage(data: unknown) {
   
   if (!result.success) {
     throw new Error(result.error.errors[0]?.message || 'Invalid message');
-  }
-
-  return result.data;
-}
-
-export function validateFeedbackRequest(data: unknown) {
-  const result = feedbackSchema.safeParse(data);
-  
-  if (!result.success) {
-    throw new Error(result.error.errors[0]?.message || 'Invalid transcript');
   }
 
   return result.data;
