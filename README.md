@@ -4,10 +4,10 @@ A modern, responsive web application that helps students and new graduates pract
 
 ## 🔗 Project Links
 
-- **📋 PRD**: https://drive.google.com/file/d/1jqi8nIR-3WaIib7Uzs2Uy_P8U1kCQQ-c/view?usp=sharing
-- **🌐 Live Demo**: https://www.coffeechatcoach.com/
+- **📋 Product Docs**: [CoffeeChat Coach Product Info + Design](https://drive.google.com/drive/folders/1wJT5SIov-YFtkE7Nv5Z7CGCAwizZqygP?usp=drive_link)
+- **🌐 Live App**: https://www.coffeechatcoach.com/
 
-## 🚀 Features
+## Features
 
 ### Core Features
 - **Responsive Design** - Mobile-first design with hamburger navigation and adaptive layouts
@@ -40,7 +40,7 @@ A modern, responsive web application that helps students and new graduates pract
 - **Styling**: Custom CSS variables with design tokens
 - **Deployment**: Vercel + Supabase
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js 18+ 
 - npm or yarn
@@ -106,7 +106,7 @@ npm run dev
 
 Visit `http://localhost:3000` to see the app!
 
-## 🗄️ Database Schema
+## Database Schema
 
 The app uses 4 main models with proper relationships:
 
@@ -222,14 +222,14 @@ npx prisma migrate deploy
 ### Generate CoffeeChat Kit
 
 1. Copy LinkedIn profile text (About, Experience, Education)
-2. Paste into Generate Kit page
+2. Paste into the Generate Kit page
 3. Get personalized conversation starters and shared interests
 4. Use the one-line pitch for introductions
 
 ### Practice Networking
 
 1. Choose scenario (Recruiter/Alumni/PM)
-2. Engage in realistic AI conversation
+2. Engage in a realistic AI conversation
 3. Receive focused feedback on your communication
 4. Review strengths and specific improvements
 
@@ -240,7 +240,7 @@ npx prisma migrate deploy
 3. Receive concise, effective rewrite (3-4 sentences)
 4. Use suggested subject lines and opening/closing phrases
 
-## 🚦 Performance & Reliability
+## Performance & Reliability
 
 - **Rate Limiting** - 10 requests per minute per user for AI endpoints
 - **Error Recovery** - Graceful handling of API failures
@@ -256,19 +256,19 @@ npx prisma migrate deploy
 - **Environment Protection** - Secure handling of API keys
 - **Rate Limiting** - Prevents abuse of AI endpoints
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
 **Database Connection**
-- Use Supabase Session Pooler connection string
+- Use the Supabase Session Pooler connection string
 - Ensure DATABASE_URL is properly formatted
 - Check if database migrations are applied
 
 **AI API Errors**
 - Verify GROQ_API_KEY is set correctly
 - Check API quota and billing status
-- Ensure proper error handling in place
+- Ensure proper error handling is in place
 
 **Authentication Issues**
 - Update to Clerk v6 for Next.js 15 compatibility
@@ -290,7 +290,7 @@ npx prisma migrate deploy
 - ✅ **Performance** - Optimized database connections and API responses
 - ✅ **Code Quality** - Clean, lint-free codebase
 
-## 📞 Support
+## Support
 
 For issues and questions:
 - Create GitHub issue with detailed description
@@ -301,15 +301,6 @@ For issues and questions:
 ## 📄 License
 
 This project is licensed under the MIT License.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Ensure responsive design and error handling
-4. Commit changes (`git commit -m 'Add amazing feature'`)
-5. Push to branch (`git push origin feature/amazing-feature`)
-6. Open Pull Request
 
 ---
 
