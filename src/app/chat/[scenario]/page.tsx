@@ -61,24 +61,36 @@ export default function ChatPage() {
 
   // Save session to database
   const saveSession = useCallback(async (messagesToSave: ChatMessageType[]) => {
-    if (messagesToSave.length < 4) return;
+    console.log('saveSession called with', messagesToSave.length, 'messages');
+    
+    if (messagesToSave.length < 4) {
+      console.log('Not enough messages to save');
+      return;
+    }
     
     setIsSaving(true);
     try {
+      console.log('Sending session to API...');
+      const payload: Record<string, unknown> = {
+        scenario: params.scenario,
+        transcript: messagesToSave,
+      };
+      if (sessionId) {
+        payload.sessionId = sessionId;
+      }
       const response = await fetch('/api/chat-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          sessionId,
-          scenario: params.scenario,
-          transcript: messagesToSave,
-        }),
+        body: JSON.stringify(payload),
       });
+
+      console.log('Session API response status:', response.status);
 
       if (response.ok) {
         const data = await response.json();
+        console.log('Session saved successfully:', data);
         if (!sessionId && data.sessionId) {
           setSessionId(data.sessionId);
           // Update URL to include session ID for future reference
@@ -86,7 +98,8 @@ export default function ChatPage() {
           window.history.replaceState({}, '', newUrl);
         }
       } else {
-        console.error('Failed to save session');
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        console.error('Failed to save session:', errorData);
       }
     } catch (error) {
       console.error('Error saving session:', error);
@@ -209,6 +222,8 @@ export default function ChatPage() {
   }, [input, isLoading, messages, params.scenario, sessionId, saveSession]);
 
   const endSession = async () => {
+    console.log('End session clicked, messages length:', messages.length);
+    
     if (messages.length < 4) {
       alert('Please have a longer conversation before ending the session.');
       return;
@@ -216,27 +231,37 @@ export default function ChatPage() {
 
     setIsLoading(true);
     try {
+      console.log('Saving session...');
       // Ensure session is saved before getting feedback
       await saveSession(messages);
+      console.log('Session saved successfully');
 
+      console.log('Getting feedback...');
+      const feedbackPayload: Record<string, unknown> = {
+        scenario: params.scenario,
+        transcript: messages,
+      };
+      if (sessionId) {
+        feedbackPayload.sessionId = sessionId;
+      }
       const response = await fetch('/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          sessionId,
-          scenario: params.scenario,
-          transcript: messages 
-        }),
+        body: JSON.stringify(feedbackPayload),
       });
+
+      console.log('Feedback response status:', response.status);
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        console.error('Feedback API error:', errorData);
         throw new Error(`Failed to get feedback: ${errorData.error || response.statusText}`);
       }
 
       const feedbackData = await response.json();
+      console.log('Feedback received:', feedbackData);
       setFeedback(feedbackData);
       setShowFeedback(true);
 
