@@ -4,8 +4,9 @@ A modern, responsive web application that helps students and new graduates pract
 
 ## 🔗 Project Links
 
-- **📋 Product Docs**: [CoffeeChat Coach Product Info + Design](https://drive.google.com/drive/folders/1wJT5SIov-YFtkE7Nv5Z7CGCAwizZqygP?usp=drive_link)
-- **🌐 Live App**: https://www.coffeechatcoach.com/
+- Product Docs & Design: [CoffeeChat Coach Overview + Design](https://drive.google.com/drive/folders/1wJT5SIov-YFtkE7Nv5Z7CGCAwizZqygP?usp=drive_link)
+- Live App: [coffeechatcoach.com](https://www.coffeechatcoach.com/)
+- Demo Video (60s) → [Watch Here](https://youtu.be/rtfF9YZp0ss)
 
 ## Features
 
